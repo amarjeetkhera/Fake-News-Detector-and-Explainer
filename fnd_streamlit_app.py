@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 """FND_streamlit app.ipynb"""
 
-!pip install streamlit
-
 # Loading libraries
 import requests
 import os
+import tempfile
 import streamlit as st
 import tensorflow as tf
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
@@ -55,47 +54,40 @@ def download_from_onedrive(share_link, save_path):
     direct_url = share_link.replace("share", "download") \
                          .replace("?shareKey=", "?download=1&shareKey=") \
                          .replace("?shareId=", "?download=1&shareId=")
-    
+
+    # Create temp file
+    temp_dir = tempfile.mkdtemp()
+    file_path = os.path.join(temp_dir, "temp_file")
+
+    # Download file
     response = requests.get(direct_url)
     with open(save_path, 'wb') as f:
         f.write(response.content)
+    return file_path
 
 # Loading models and caching them to prevent reloading
 @st.cache_resource
 def load_models():
-    # Create models directory if it doesn't exist
-    os.makedirs("models", exist_ok=True)
-    
-    # Define OneDrive file URLs (replace with your actual links)
-    ONEDRIVE_FILES = {
-        "Fake_News_Detector_Model.h5": "https://1drv.ms/u/s!YOUR_LSTM_MODEL_LINK",
-        "tokenizer.pkl": "https://1drv.ms/u/s!YOUR_TOKENIZER_LINK",
-        "DistilBERT_model.pt": "https://1drv.ms/u/s!YOUR_DISTILBERT_MODEL_LINK",
-        "distilbert_model/config.json": "https://1drv.ms/u/s!YOUR_CONFIG_LINK",
-        "distilbert_model/tokenizer_config.json": "https://1drv.ms/u/s!YOUR_TOKENIZER_CONFIG_LINK",
-        "distilbert_model/vocab.txt": "https://1drv.ms/u/s!YOUR_VOCAB_LINK"
-    }
-
-    # Download files if they don't exist locally
-    for filepath, url in ONEDRIVE_FILES.items():
-        if not os.path.exists(f"models/{filepath}"):
-            os.makedirs(os.path.dirname(f"models/{filepath}"), exist_ok=True)
-            download_from_onedrive(url, f"models/{filepath}")
+    # Downloading files
+    lstm_model_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/Ed4pUMI5oopIvbzOmPKn5WUBqwEYm0AXdw9R-BL1SxQaag")
+    tokenizer_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/EbJ8HIh_ystGnoScRncv-NkBx9P8LCiVlPgSY2gH-6mxqQ")
+    distilbert_model_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/EbDivWSLdhpInzlXYqYbLkABqNf695-7fslaikxp1ZtzDQ")
+    distilbert_config_path = download_from_onedrive("https://1drv.ms/f/c/b2a30cd40bf3754c/EtAXKgRjwzRKiRcCHoIxCC0BnRr-Kx6XJdrdUj608x9yeA")
 
     # LSTM Model
-    lstm_model = tf.keras.models.load_model('/content/Fake_News_Detector_Model.h5')
-    with open('/content/tokenizer.pkl', 'rb') as f:
+    lstm_model = tf.keras.models.load_model('lstm_model_path')
+    with open('tokenizer_path', 'rb') as f:
         lstm_tokenizer = pickle.load(f)
 
     # DistilBERT Model
-    tokenizer = DistilBertTokenizer.from_pretrained('/content/drive/MyDrive/Fake News/distilbert_model')
+    tokenizer = DistilBertTokenizer.from_pretrained(os.path.dirname(distilbert_config_path)
     model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased')  # Load architecture
     model = torch.quantization.quantize_dynamic(
         model,
         {torch.nn.Linear},
         dtype=torch.qint8
     )
-    model.load_state_dict(torch.load('/content/DistilBERT_model.pt', map_location=torch.device('cpu')))  # Load weights
+    model.load_state_dict(torch.load(distilbert_model_path, map_location=torch.device('cpu')))  # Load weights
     model.eval()
 
     return lstm_model, lstm_tokenizer, model, tokenizer
