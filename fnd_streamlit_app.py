@@ -80,7 +80,7 @@ def download_from_onedrive(share_link, save_path=None):
 def load_models():
     # Downloading files
     lstm_model_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/Ed4pUMI5oopIvbzOmPKn5WUBqwEYm0AXdw9R-BL1SxQaag",
-                                             "Models/Fake News Detector/lstm_model/Fake_News_Detector_Model")
+                                             "Models/Fake News Detector/lstm_model/Fake_News_Detector_Model.h5")
     tokenizer_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/EbJ8HIh_ystGnoScRncv-NkBx9P8LCiVlPgSY2gH-6mxqQ",
                                            "Models/Fake News Detector/lstm_model/tokenizer.pkl")
     distilbert_model_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/EbDivWSLdhpInzlXYqYbLkABqNf695-7fslaikxp1ZtzDQ",
