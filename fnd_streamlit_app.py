@@ -1,6 +1,15 @@
 # -*- coding: utf-8 -*-
 """FND_streamlit app.ipynb"""
 
+# Fixes at the very top
+import asyncio
+import sys
+if sys.platform == "win32" and (3, 8) <= sys.version_info < (3, 9):
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
+import torch
+torch._C._disable_torch_functional_class_checks = True
+
 # Loading libraries
 import requests
 import os
@@ -8,20 +17,12 @@ import tempfile
 import streamlit as st
 import tensorflow as tf
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
-import torch
-from torch import __version__ as torch_version
 import numpy as np
 import pickle
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import re
 import nltk
 from nltk.corpus import stopwords
-
-# Disabling torch class path inspection
-torch._C._disable_torch_functional_class_checks = True
-
-#Verfiying Torch version
-print(f"Using Pytorch version: {torch_version}")
 
 # Downloading necessary NLTK resources
 nltk.download('stopwords')
@@ -64,13 +65,19 @@ def download_from_onedrive(share_link, save_path=None):
 
     if save_path is None:
         # Create temp file if no path specified
-        save_path = os.path.join(tempfile.mkdtemp(), "temp_file")
+        save_path = os.path.join(tempfile.mkdtemp(), os.path.basename(share_link.split('?')[0]))
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
 
     # Download file
-    response = requests.get(direct_url)
+    response = requests.get(direct_url, timeout=30)
+    response.raise_for_status()
     with open(save_path, 'wb') as f:
         f.write(response.content)
     return save_path
+
+except Exception as e:
+        st.error(f"Failed to download {share_link}: {str(e)}")
+        return None
 
 # Loading models and caching them to prevent reloading
 @st.cache_resource
