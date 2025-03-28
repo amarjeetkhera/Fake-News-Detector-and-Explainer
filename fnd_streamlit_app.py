@@ -76,8 +76,8 @@ def download_from_onedrive(share_link, save_path=None):
     return save_path
 
 except Exception as e:
-        st.error(f"Failed to download {share_link}: {str(e)}")
-        return None
+    st.error(f"Failed to download {share_link}: {str(e)}")
+    return None
 
 # Loading models and caching them to prevent reloading
 @st.cache_resource
