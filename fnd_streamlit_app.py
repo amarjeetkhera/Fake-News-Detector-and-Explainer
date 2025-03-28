@@ -9,12 +9,19 @@ import streamlit as st
 import tensorflow as tf
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
 import torch
+from torch import __version__ as torch_version
 import numpy as np
 import pickle
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import re
 import nltk
 from nltk.corpus import stopwords
+
+# Disabling torch class path inspection
+torch._C._disable_torch_functional_class_checks = True
+
+#Verfiying Torch version
+print(f"Using Pytorch version: {torch_version}")
 
 # Downloading necessary NLTK resources
 nltk.download('stopwords')
@@ -48,31 +55,35 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-def download_from_onedrive(share_link, save_path):
+def download_from_onedrive(share_link, save_path=None):
     """Download a file from OneDrive shared link"""
     # Convert sharing link to direct download URL
     direct_url = share_link.replace("share", "download") \
                          .replace("?shareKey=", "?download=1&shareKey=") \
                          .replace("?shareId=", "?download=1&shareId=")
 
-    # Create temp file
-    temp_dir = tempfile.mkdtemp()
-    file_path = os.path.join(temp_dir, "temp_file")
+    if save_path is None:
+        # Create temp file if no path specified
+        save_path = os.path.join(tempfile.mkdtemp(), "temp_file")
 
     # Download file
     response = requests.get(direct_url)
     with open(save_path, 'wb') as f:
         f.write(response.content)
-    return file_path
+    return save_path
 
 # Loading models and caching them to prevent reloading
 @st.cache_resource
 def load_models():
     # Downloading files
-    lstm_model_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/Ed4pUMI5oopIvbzOmPKn5WUBqwEYm0AXdw9R-BL1SxQaag")
-    tokenizer_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/EbJ8HIh_ystGnoScRncv-NkBx9P8LCiVlPgSY2gH-6mxqQ")
-    distilbert_model_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/EbDivWSLdhpInzlXYqYbLkABqNf695-7fslaikxp1ZtzDQ")
-    distilbert_config_path = download_from_onedrive("https://1drv.ms/f/c/b2a30cd40bf3754c/EtAXKgRjwzRKiRcCHoIxCC0BnRr-Kx6XJdrdUj608x9yeA")
+    lstm_model_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/Ed4pUMI5oopIvbzOmPKn5WUBqwEYm0AXdw9R-BL1SxQaag",
+                                             "Models/Fake News Detector/lstm_model/Fake_News_Detector_Model.h5")
+    tokenizer_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/EbJ8HIh_ystGnoScRncv-NkBx9P8LCiVlPgSY2gH-6mxqQ",
+                                           "Models/Fake News Detector/lstm_model/tokenizer.pkl")
+    distilbert_model_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/EbDivWSLdhpInzlXYqYbLkABqNf695-7fslaikxp1ZtzDQ",
+                                                  "Models/Fake News Detector/distilbert_model/DistilBERT_model.pt")
+    distilbert_config_path = download_from_onedrive("https://1drv.ms/f/c/b2a30cd40bf3754c/EtAXKgRjwzRKiRcCHoIxCC0BnRr-Kx6XJdrdUj608x9yeA",
+                                                   "Models/Fake News Detector/distilbert_model/tokenizer_config.json")
 
     # LSTM Model
     lstm_model = tf.keras.models.load_model('lstm_model_path')
