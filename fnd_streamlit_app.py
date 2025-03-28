@@ -4,6 +4,8 @@
 !pip install streamlit
 
 # Loading libraries
+import requests
+import os
 import streamlit as st
 import tensorflow as tf
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
@@ -47,9 +49,39 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+def download_from_onedrive(share_link, save_path):
+    """Download a file from OneDrive shared link"""
+    # Convert sharing link to direct download URL
+    direct_url = share_link.replace("share", "download") \
+                         .replace("?shareKey=", "?download=1&shareKey=") \
+                         .replace("?shareId=", "?download=1&shareId=")
+    
+    response = requests.get(direct_url)
+    with open(save_path, 'wb') as f:
+        f.write(response.content)
+
 # Loading models and caching them to prevent reloading
 @st.cache_resource
 def load_models():
+    # Create models directory if it doesn't exist
+    os.makedirs("models", exist_ok=True)
+    
+    # Define OneDrive file URLs (replace with your actual links)
+    ONEDRIVE_FILES = {
+        "Fake_News_Detector_Model.h5": "https://1drv.ms/u/s!YOUR_LSTM_MODEL_LINK",
+        "tokenizer.pkl": "https://1drv.ms/u/s!YOUR_TOKENIZER_LINK",
+        "DistilBERT_model.pt": "https://1drv.ms/u/s!YOUR_DISTILBERT_MODEL_LINK",
+        "distilbert_model/config.json": "https://1drv.ms/u/s!YOUR_CONFIG_LINK",
+        "distilbert_model/tokenizer_config.json": "https://1drv.ms/u/s!YOUR_TOKENIZER_CONFIG_LINK",
+        "distilbert_model/vocab.txt": "https://1drv.ms/u/s!YOUR_VOCAB_LINK"
+    }
+
+    # Download files if they don't exist locally
+    for filepath, url in ONEDRIVE_FILES.items():
+        if not os.path.exists(f"models/{filepath}"):
+            os.makedirs(os.path.dirname(f"models/{filepath}"), exist_ok=True)
+            download_from_onedrive(url, f"models/{filepath}")
+
     # LSTM Model
     lstm_model = tf.keras.models.load_model('/content/Fake_News_Detector_Model.h5')
     with open('/content/tokenizer.pkl', 'rb') as f:
