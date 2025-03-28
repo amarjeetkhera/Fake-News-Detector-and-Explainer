@@ -89,7 +89,7 @@ def load_models():
                                                    "Models/Fake News Detector/distilbert_model/tokenizer_config.json")
 
     # LSTM Model
-    lstm_model = tf.keras.models.load_model('lstm_model_path')
+    lstm_model = tf.keras.models.load_model('lstm_model_path', use_legacy_format=True)
     with open('tokenizer_path', 'rb') as f:
         lstm_tokenizer = pickle.load(f)
 
