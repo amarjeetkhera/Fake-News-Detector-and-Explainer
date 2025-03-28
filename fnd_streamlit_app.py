@@ -79,14 +79,14 @@ def download_from_onedrive(share_link, save_path=None):
 @st.cache_resource
 def load_models():
     # Downloading files
-    lstm_model_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/Ed4pUMI5oopIvbzOmPKn5WUBqwEYm0AXdw9R-BL1SxQaag"
-                                             )
-    tokenizer_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/EbJ8HIh_ystGnoScRncv-NkBx9P8LCiVlPgSY2gH-6mxqQ"
-                                           )
-    distilbert_model_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/EbDivWSLdhpInzlXYqYbLkABqNf695-7fslaikxp1ZtzDQ"
-                                                  )
-    distilbert_config_path = download_from_onedrive("https://1drv.ms/f/c/b2a30cd40bf3754c/EtAXKgRjwzRKiRcCHoIxCC0BnRr-Kx6XJdrdUj608x9yeA"
-                                                   )
+    lstm_model_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/Ed4pUMI5oopIvbzOmPKn5WUBqwEYm0AXdw9R-BL1SxQaag",
+                                              "Fake_News_Detector_Model.h5")
+    tokenizer_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/EbJ8HIh_ystGnoScRncv-NkBx9P8LCiVlPgSY2gH-6mxqQ",
+                                           "tokenizer")
+    distilbert_model_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/EbDivWSLdhpInzlXYqYbLkABqNf695-7fslaikxp1ZtzDQ",
+                                                  "DistilBERT_model")
+    distilbert_config_path = download_from_onedrive("https://1drv.ms/f/c/b2a30cd40bf3754c/EtAXKgRjwzRKiRcCHoIxCC0BnRr-Kx6XJdrdUj608x9yeA",
+                                                   "tokenizer_config")
 
     # LSTM Model
     lstm_layer = tf.keras.layers.TFSMLayer(lstm_model_path, call_endpoint='serving_default')
