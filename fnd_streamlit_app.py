@@ -56,40 +56,11 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-def download_from_onedrive(share_link, save_path=None):
-    """Download a file from OneDrive shared link"""
-    # Convert sharing link to direct download URL
-    direct_url = share_link.replace("share", "download") \
-                         .replace("?shareKey=", "?download=1&shareKey=") \
-                         .replace("?shareId=", "?download=1&shareId=")
-
-    if save_path is None:
-        # Create temp file if no path specified
-        save_path = os.path.join(tempfile.mkdtemp(), os.path.basename(share_link.split('?')[0]))
-    os.makedirs(os.path.dirname(save_path), exist_ok=True)
-
-    # Download file
-    response = requests.get(direct_url, timeout=30)
-    response.raise_for_status()
-    with open(save_path, 'wb') as f:
-        f.write(response.content)
-    return save_path
-
 # Loading models and caching them to prevent reloading
 @st.cache_resource
 def load_models():
-    # Downloading files
-    lstm_model_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/Ed4pUMI5oopIvbzOmPKn5WUBqwEYm0AXdw9R-BL1SxQaag",
-                                              "Fake_News_Detector_Model.h5")
-    tokenizer_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/EbJ8HIh_ystGnoScRncv-NkBx9P8LCiVlPgSY2gH-6mxqQ",
-                                           "tokenizer")
-    distilbert_model_path = download_from_onedrive("https://1drv.ms/u/c/b2a30cd40bf3754c/EbDivWSLdhpInzlXYqYbLkABqNf695-7fslaikxp1ZtzDQ",
-                                                  "DistilBERT_model")
-    distilbert_config_path = download_from_onedrive("https://1drv.ms/f/c/b2a30cd40bf3754c/EtAXKgRjwzRKiRcCHoIxCC0BnRr-Kx6XJdrdUj608x9yeA",
-                                                   "tokenizer_config")
-
     # LSTM Model
-    lstm_layer = tf.keras.layers.TFSMLayer(lstm_model_path, call_endpoint='serving_default')
+    lstm_layer = tf.keras.layers.TFSMLayer("Fake_News_Detector_Model.h5", call_endpoint='serving_default')
     lstm_model = tf.keras.Sequential([lstm_layer])
     with open('tokenizer_path', 'rb') as f:
         lstm_tokenizer = pickle.load(f)
