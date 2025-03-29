@@ -66,14 +66,14 @@ def load_models():
         lstm_tokenizer = pickle.load(f)
 
     # DistilBERT Model
-    tokenizer = DistilBertTokenizer.from_pretrained("Models/DistilBERT Model")
+    tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
     model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased')  # Load architecture
     model = torch.quantization.quantize_dynamic(
         model,
         {torch.nn.Linear},
         dtype=torch.qint8
     )
-    model.load_state_dict(torch.load(distilbert_model_path, map_location=torch.device('cpu')))  # Load weights
+    #model.load_state_dict(torch.load(distilbert_model_path, map_location=torch.device('cpu')))  # Load weights
     model.eval()
 
     return lstm_model, lstm_tokenizer, model, tokenizer
