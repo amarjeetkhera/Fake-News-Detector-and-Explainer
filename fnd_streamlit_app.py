@@ -96,7 +96,7 @@ def analyze_news(text):
     }
 
 # Streamlit UI
-st.title("🔍 Fake News Detector")
+st.title("Fake News Detector & Explainer")
 st.markdown("""
 This tool combines:
 - **LSTM** for classification
