@@ -72,7 +72,7 @@ def clean_text(text):
 def generate_mistral_explanation(text, prediction, lstm_proba):
     api_key =   "tNsDSmxLXwubltb5tdZkOdkOvqVLv56r" # Use Streamlit secrets
     client = Mistral(api_key=api_key)
-    prompt = f"""The following news article was classified as {prediction} with {(lstm_proba)*100:.2f}% confidence.\n\n{text}\n\nExplain in simple terms why this news might be classified as {prediction}. Fact check the classification."""
+    prompt = f"""The following news article was classified as {prediction} with {lstm_proba:.2f}% confidence.\n\n{text}\n\nExplain in simple terms why this news might be classified as {prediction}. Fact check the classification."""
     messages = [{"role":"system", "content":"You are an AI expert in fake news detection."},
         {"role":"user", "content":prompt}
     ]
@@ -91,7 +91,7 @@ def analyze_news(text):
     explanation = generate_mistral_explanation(text, prediction, lstm_proba)
     return {
         "prediction": prediction,
-        "confidence": float(lstm_proba if prediction == "Fake" else 1 - lstm_proba),
+        "confidence": 100*(lstm_proba if prediction == "Fake" else 1 - lstm_proba),
         "explanation": explanation,
     }
 
