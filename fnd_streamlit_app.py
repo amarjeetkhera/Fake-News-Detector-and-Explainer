@@ -68,8 +68,8 @@ def clean_text(text):
     return ""
 
 def generate_mistral_explanation(text, prediction, lstm_proba):
-    key = st.secrets["api_key"]  # Use Streamlit secrets
-    client = Mistral(api_key=key)
+    api_key = st.secrets["api_key"]  # Use Streamlit secrets
+    client = Mistral(api_key=api_key)
     prompt = f"""The following news article was classified as {prediction} with {lstm_proba:.2f}% confidence.\n\n{text}\n\nExplain in simple terms why this news might be classified as {prediction}. Fact check the classification."""
     messages = [
         ChatMessage(role="system", content="You are an AI expert in fake news detection."),
