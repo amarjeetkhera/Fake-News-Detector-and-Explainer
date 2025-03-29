@@ -2,13 +2,13 @@
 """FND_streamlit app.ipynb"""
 
 # Fixes at the very top
-import asyncio
-import sys
-if sys.platform == "win32" and (3, 8) <= sys.version_info < (3, 9):
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+#import asyncio
+#import sys
+#if sys.platform == "win32" and (3, 8) <= sys.version_info < (3, 9):
+    #asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-import torch
-torch._C._disable_torch_functional_class_checks = True
+#import torch
+#torch._C._disable_torch_functional_class_checks = True
 
 # Loading libraries
 import requests
