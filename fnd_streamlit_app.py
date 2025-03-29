@@ -6,8 +6,6 @@ import os
 import tempfile
 import streamlit as st
 import tensorflow as tf
-from transformers import T5Tokenizer, T5ForConditionalGeneration
-import sentencepiece
 import numpy as np
 import pickle
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -56,14 +54,10 @@ def load_models():
     lstm_model = tf.keras.models.load_model("Models/LSTM Model/Fake_News_Detector_Model.keras")
     with open("Models/LSTM Model/tokenizer.pkl", 'rb') as f:
         lstm_tokenizer = pickle.load(f)
+        
+    return lstm_model, lstm_tokenizer
 
-    # T5 Model
-    tokenizer = T5Tokenizer.from_pretrained('t5-small')
-    model = T5ForConditionalGeneration.from_pretrained('t5-small')
-    model.eval()
-    return lstm_model, lstm_tokenizer, model, tokenizer
-
-lstm_model, lstm_tokenizer, t5_model, t5_tokenizer = load_models()
+lstm_model, lstm_tokenizer = load_models()
 
 # Function to clean the input
 def clean_text(text):
