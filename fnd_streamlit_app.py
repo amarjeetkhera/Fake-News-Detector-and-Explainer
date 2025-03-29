@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 """FND_streamlit app.ipynb"""
 # Loading libraries
-import requests
-import os
-import tempfile
 import streamlit as st
 import tensorflow as tf
 import numpy as np
@@ -12,8 +9,8 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import re
 import nltk
 from nltk.corpus import stopwords
-import torch
-from mistralai import Mistral
+from mistralai.client import MistralClient
+from mistralai.models.chat_completion import ChatMessage
 
 # Downloading necessary NLTK resources
 nltk.download('stopwords')
@@ -71,37 +68,39 @@ def clean_text(text):
         return text
     return ""
 
+def generate_mistral_explanation(text, prediction, lstm_proba):
+    api_key = st.secrets["tNsDSmxLXwubltb5tdZkOdkOvqVLv56r"]  # Use Streamlit secrets
+    client = MistralClient(api_key=api_key)
+    prompt = f"""The following news article was classified as {prediction} with {lstm_proba:.2f}% confidence.\n\n{text}\n\nExplain in simple terms why this news might be classified as {prediction}. Fact check the classification."""
+    messages = [
+        ChatMessage(role="system", content="You are an AI expert in fake news detection."),
+        ChatMessage(role="user", content=prompt)
+    ]
+    try:
+        response = client.chat(model="mistral-medium", messages=messages)
+        return response.choices[0].message.content
+    except Exception as e:
+        return f"Error generating explanation: {e}"
+
 def analyze_news(text):
-    # LSTM prediction
     cleaned_text = clean_text(text)
     sequence = lstm_tokenizer.texts_to_sequences([cleaned_text])
     padded = pad_sequences(sequence, maxlen=100, padding='post')
     lstm_proba = lstm_model.predict(padded, verbose=0)[0][0]
     prediction = "Fake" if lstm_proba > 0.5 else "Real"
-
-    prompt = f"""
-    The following news article was classified as {prediction} with {lstm_proba:.2f}% confidence.
-
-    {text}
-
-    Explain in simple terms why this news might be classified as {prediction}. Fact check the classification.
-    """
-    api_key = "tNsDSmxLXwubltb5tdZkOdkOvqVLv56r"  # Replace with your actual API key
-    client = Mistral(api_key=api_key)
-    response = client.chat.complete(
-        model="mistral-medium",
-        messages = [{"role": "system", "content": "You are an AI expert in fake news detection."},
-                    {"role": "user", "content": prompt}]
-    )
-    explanation = response.choices[0].message.content
-    return explanation
+    explanation = generate_mistral_explanation(text, prediction, lstm_proba)
+    return {
+        "prediction": prediction,
+        "confidence": float(lstm_proba if prediction == "Fake" else 1 - lstm_proba),
+        "explanation": explanation,
+    }
 
 # Streamlit UI
 st.title("🔍 Fake News Detector")
 st.markdown("""
 This tool combines:
 - **LSTM** for classification
-- **T5-Small Model** for explanation
+- **Mistral API** for explanation
 """)
 
 news_input = st.text_area("Paste news article or headline:", height=150)
@@ -134,7 +133,7 @@ st.markdown("""
     }
 </style>
 <div class="footer">
-    Model: LSTM + T5-Small | Made with Streamlit
+    Model: LSTM + Mistral API | Made with Streamlit
 </div>
 """, unsafe_allow_html=True)
 
