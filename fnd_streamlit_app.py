@@ -16,7 +16,6 @@ import nltk
 from nltk.corpus import stopwords
 import torch
 from mistralai.client import MistralClient
-from mistralai.models.chat_completion import ChatMessage
 
 # Downloading necessary NLTK resources
 nltk.download('stopwords')
@@ -91,7 +90,7 @@ def analyze_news(text):
     client = MistralClient(api_key=api_key)
 
     messages = [
-        ChatMessage(role="user", content=f"Explain why {text} is {prediction}.")
+        mistral.chat.complete(role="user", content=f"Explain why {text} is {prediction}.")
     ]
     chat_response = client.chat(model=model, messages=messages)
     explanation = chat_response.choices[0].message.content
