@@ -97,11 +97,6 @@ def analyze_news(text):
 
 # Streamlit UI
 st.title("Fake News Detector & Explainer")
-st.markdown("""
-This tool combines:
-- **LSTM** for classification
-- **Mistral API** for explanation
-""")
 
 news_input = st.text_area("Paste news article or headline:", height=150)
 
