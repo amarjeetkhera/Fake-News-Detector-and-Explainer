@@ -70,14 +70,8 @@ def load_models():
     # DistilBERT Model
     tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
     model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased')  # Load architecture
-    model = torch.quantization.quantize_dynamic(
-        model,
-        {torch.nn.Linear},
-        dtype=torch.qint8
-    )
     #model.load_state_dict(torch.load(distilbert_model_path, map_location=torch.device('cpu')))  # Load weights
     model.eval()
-
     return lstm_model, lstm_tokenizer, model, tokenizer
 
 lstm_model, lstm_tokenizer, distilbert_model, distilbert_tokenizer = load_models()
@@ -111,7 +105,14 @@ def analyze_news(text):
     )
     with torch.no_grad():
         outputs = distilbert_model.generate(**inputs, max_new_tokens=50)
-    explanation = distilbert_tokenizer.decode(outputs[0], skip_special_tokens=True).split(":")[-1].strip()
+    try:
+        explanation = distilbert_tokenizer.decode(outputs[0], skip_special_tokens=True).split(":")[-1].strip()
+    except IndexError:
+        explanation = "Explanation could not be generated."
+    except KeyError as e:
+        explanation = f"Explanation generation error. Key error: {e}"
+    except Exception as e:
+        explanation = f"An unexpected error occurred during explanation generation: {e}"
 
     return {
         "prediction": prediction,
