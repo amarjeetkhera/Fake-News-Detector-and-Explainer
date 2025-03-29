@@ -14,6 +14,7 @@ torch._C._disable_torch_functional_class_checks = True
 import requests
 import os
 import tempfile
+import joblib
 import streamlit as st
 import tensorflow as tf
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
@@ -60,8 +61,9 @@ st.markdown("""
 @st.cache_resource
 def load_models():
     # LSTM Model
-    lstm_layer = tf.keras.layers.TFSMLayer("Models/LSTM Model/Fake_News_Detector_Model.h5", call_endpoint='serving_default')
-    lstm_model = tf.keras.Sequential([lstm_layer])
+    #lstm_layer = tf.keras.layers.TFSMLayer("Models/LSTM Model/Fake_News_Detector_Model.h5", call_endpoint='serving_default')
+    #lstm_model = tf.keras.Sequential([lstm_layer])
+    lstm_model = joblib.load(
     with open("Models/LSTM Model/tokenizer.pkl", 'rb') as f:
         lstm_tokenizer = pickle.load(f)
 
