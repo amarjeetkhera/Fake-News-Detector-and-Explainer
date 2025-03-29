@@ -113,6 +113,18 @@ if st.button("Analyze"):
         # Display results
         box_class = "fake" if result["prediction"] == "Fake" else "real"
         st.markdown(f"""
+        <style>
+        .result-box {{
+            background-color: #4A4A4A; /* Dark Grey */
+            color: white; 
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }}
+        .big-font {{
+            font-size: 18px;
+        }}
+    </style>
         <div class="result-box {box_class}">
             <h3>Result: <span style='color: {"red" if result["prediction"] == "Fake" else "green"}'>{result["prediction"]}</span></h3>
             <p class="big-font">Confidence: <b>{result['confidence']:.1%}</b></p>
