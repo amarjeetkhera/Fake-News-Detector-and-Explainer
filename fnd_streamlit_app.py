@@ -1,15 +1,6 @@
 # -*- coding: utf-8 -*-
 """FND_streamlit app.ipynb"""
 
-# Fixes at the very top
-#import asyncio
-#import sys
-#if sys.platform == "win32" and (3, 8) <= sys.version_info < (3, 9):
-    #asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-
-#import torch
-#torch._C._disable_torch_functional_class_checks = True
-
 # Loading libraries
 import requests
 import os
@@ -23,6 +14,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import re
 import nltk
 from nltk.corpus import stopwords
+import torch
 
 # Downloading necessary NLTK resources
 nltk.download('stopwords')
@@ -60,8 +52,6 @@ st.markdown("""
 @st.cache_resource
 def load_models():
     # LSTM Model
-    #lstm_layer = tf.keras.layers.TFSMLayer("Models/LSTM Model/Fake_News_Detector_Model.h5", call_endpoint='serving_default')
-    #lstm_model = tf.keras.Sequential([lstm_layer])
     lstm_model = tf.keras.models.load_model("Models/LSTM Model/Fake_News_Detector_Model.keras")
     with open("Models/LSTM Model/tokenizer.pkl", 'rb') as f:
         lstm_tokenizer = pickle.load(f)
