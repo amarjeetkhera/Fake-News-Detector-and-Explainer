@@ -96,7 +96,7 @@ def analyze_news(text):
     client = Mistral(api_key=api_key)
     response = client.chat.complete(
         model="mistral-medium",
-        messages = [{"role"= "system", "content": "You are an AI expert in fake news detection."},
+        messages = [{"role": "system", "content": "You are an AI expert in fake news detection."},
                     {"role": "user", "content": prompt}]
     )
     explanation = response.choices[0].message.content
