@@ -8,6 +8,7 @@ import tempfile
 import streamlit as st
 import tensorflow as tf
 from transformers import T5Tokenizer, T5ForConditionalGeneration
+import sentencepiece
 import numpy as np
 import pickle
 from tensorflow.keras.preprocessing.sequence import pad_sequences
