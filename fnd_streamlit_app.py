@@ -71,9 +71,8 @@ def generate_mistral_explanation(text, prediction, lstm_proba):
     api_key =   "tNsDSmxLXwubltb5tdZkOdkOvqVLv56r" # Use Streamlit secrets
     client = Mistral(api_key=api_key)
     prompt = f"""The following news article was classified as {prediction} with {lstm_proba:.2f}% confidence.\n\n{text}\n\nExplain in simple terms why this news might be classified as {prediction}. Fact check the classification."""
-    messages = [
-        ChatMessage(role="system", content="You are an AI expert in fake news detection."),
-        ChatMessage(role="user", content=prompt)
+    messages = [{role="system", content="You are an AI expert in fake news detection."},
+        {role="user", content=prompt}
     ]
     try:
         response = client.chat.complete(model="mistral-medium", messages=messages)
