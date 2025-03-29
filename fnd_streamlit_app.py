@@ -14,7 +14,6 @@
 import requests
 import os
 import tempfile
-import joblib
 import streamlit as st
 import tensorflow as tf
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
@@ -63,14 +62,13 @@ def load_models():
     # LSTM Model
     #lstm_layer = tf.keras.layers.TFSMLayer("Models/LSTM Model/Fake_News_Detector_Model.h5", call_endpoint='serving_default')
     #lstm_model = tf.keras.Sequential([lstm_layer])
-    lstm_model = joblib.load("Models/LSTM Model/Fake_News_Detector_Model.h5")
+    lstm_model = tf.keras.models.load_model("Models/LSTM Model/Fake_News_Detector_Model.keras")
     with open("Models/LSTM Model/tokenizer.pkl", 'rb') as f:
         lstm_tokenizer = pickle.load(f)
 
     # DistilBERT Model
     tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
-    model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased')  # Load architecture
-    #model.load_state_dict(torch.load(distilbert_model_path, map_location=torch.device('cpu')))  # Load weights
+    model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased')
     model.eval()
     return lstm_model, lstm_tokenizer, model, tokenizer
 
