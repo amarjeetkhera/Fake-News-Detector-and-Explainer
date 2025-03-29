@@ -9,7 +9,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import re
 import nltk
 from nltk.corpus import stopwords
-import mistralai as Mistral
+from mistralai import Mistral
 
 # Downloading necessary NLTK resources
 nltk.download('stopwords')
