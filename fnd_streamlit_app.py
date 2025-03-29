@@ -127,7 +127,7 @@ st.markdown("""
     }
 </style>
 <div class="footer">
-    Model: LSTM + Mistral API | Made with Streamlit
+    Model: LSTM + Mistral API | Made with Streamlit by Amarjeet Khera
 </div>
 """, unsafe_allow_html=True)
 
