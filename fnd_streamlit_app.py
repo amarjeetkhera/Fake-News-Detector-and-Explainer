@@ -85,10 +85,10 @@ def analyze_news(text):
     prediction = "Fake" if lstm_proba > 0.5 else "Real"
 
     # T5 Explanation
-    input_text = f"Explain why this news is {prediction} in one or two sentences: {text}"
+    input_text = f"Explain why {text} is {prediction}"
     inputs = t5_tokenizer(input_text, return_tensors="pt", truncation=True, max_length=128)
     with torch.no_grad():
-        outputs = t5_model.generate(**inputs, max_new_tokens=50)
+        outputs = t5_model.generate(**inputs, max_new_tokens=200)
     explanation = t5_tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
 
     return {
