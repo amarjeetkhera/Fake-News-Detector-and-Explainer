@@ -1,4 +1,4 @@
-joblib﻿==1.4.2
+joblib==1.4.2
 requests==2.32.3
 streamlit==1.44.0
 tensorflow==2.18.0
@@ -6,4 +6,3 @@ torch==2.6.0
 transformers==4.50.0
 numpy==2.0.2
 nltk==3.9.1
-
