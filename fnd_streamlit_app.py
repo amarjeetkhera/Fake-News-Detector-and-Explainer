@@ -10,7 +10,7 @@ import re
 import nltk
 from nltk.corpus import stopwords
 from mistralai.client import MistralClient
-from mistralai.models.chat_completion import ChatMessage
+from mistralai.models.chat.completion import ChatMessage
 
 # Downloading necessary NLTK resources
 nltk.download('stopwords')
