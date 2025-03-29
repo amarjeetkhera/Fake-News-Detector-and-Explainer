@@ -124,7 +124,7 @@ if st.button("Analyze"):
         .big-font {{
             font-size: 18px;
         }}
-    </style>
+        </style>
         <div class="result-box {box_class}">
             <h3>Result: <span style='color: {"red" if result["prediction"] == "Fake" else "green"}'>{result["prediction"]}</span></h3>
             <p class="big-font">Confidence: <b>{result['confidence']:.1%}</b></p>
