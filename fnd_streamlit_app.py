@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """FND_streamlit app.ipynb"""
-pip install sentencepiece
 # Loading libraries
 import requests
 import os
