@@ -15,6 +15,8 @@ import re
 import nltk
 from nltk.corpus import stopwords
 import torch
+from mistralai.client import MistralClient
+from mistralai.models.chat_completion import ChatMessage
 
 # Downloading necessary NLTK resources
 nltk.download('stopwords')
@@ -84,18 +86,16 @@ def analyze_news(text):
     lstm_proba = lstm_model.predict(padded, verbose=0)[0][0]
     prediction = "Fake" if lstm_proba > 0.5 else "Real"
 
-    # T5 Explanation
-    input_text = f"Explain {text}"
-    inputs = t5_tokenizer(input_text, return_tensors="pt", truncation=True, max_length=128)
-    with torch.no_grad():
-        outputs = t5_model.generate(**inputs, max_new_tokens=200)
-    explanation = t5_tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
+    api_key = "tNsDSmxLXwubltb5tdZkOdkOvqVLv56r"  # Replace with your actual API key
+    model = "mistral-medium"  # Or another Mistral model of your choice
+    client = MistralClient(api_key=api_key)
 
-    return {
-        "prediction": prediction,
-        "confidence": float(lstm_proba if prediction == "Fake" else 1 - lstm_proba),
-        "explanation": explanation
-    }
+    messages = [
+        ChatMessage(role="user", content=f"Explain why {text} is {prediction}.")
+    ]
+    chat_response = client.chat(model=model, messages=messages)
+    explanation = chat_response.choices[0].message.content
+    return explanation
 
 # Streamlit UI
 st.title("🔍 Fake News Detector")
