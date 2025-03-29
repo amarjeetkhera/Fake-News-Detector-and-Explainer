@@ -15,7 +15,7 @@ import re
 import nltk
 from nltk.corpus import stopwords
 import torch
-from mistralai.client import MistralClient
+from mistralai import Mistral
 
 # Downloading necessary NLTK resources
 nltk.download('stopwords')
@@ -85,14 +85,20 @@ def analyze_news(text):
     lstm_proba = lstm_model.predict(padded, verbose=0)[0][0]
     prediction = "Fake" if lstm_proba > 0.5 else "Real"
 
-    api_key = "tNsDSmxLXwubltb5tdZkOdkOvqVLv56r"  # Replace with your actual API key
-    model = "mistral-medium"  # Or another Mistral model of your choice
-    client = MistralClient(api_key=api_key)
+    prompt = f"""
+    The following news article was classified as {prediction} with {lstm_proba:.2f}% confidence.
 
-    messages = [
-        mistral.chat.complete(role="user", content=f"Explain why {text} is {prediction}.")
-    ]
-    chat_response = client.chat(model=model, messages=messages)
+    {text}
+
+    Explain in simple terms why this news might be classified as {prediction}. Fact check the classification.
+    """
+    api_key = "tNsDSmxLXwubltb5tdZkOdkOvqVLv56r"  # Replace with your actual API key
+    client = Mistral(api_key=api_key)
+    response = client.chat.complete(
+        model="mistral-medium",
+        messages = [{"role"= "system", "content": "You are an AI expert in fake news detection."},
+                    {"role": "user", "content": prompt}]
+    
     explanation = chat_response.choices[0].message.content
     return explanation
 
