@@ -7,7 +7,7 @@ import os
 import tempfile
 import streamlit as st
 import tensorflow as tf
-from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
+from transformers import T5Tokenizer, T5ForConditionalGeneration
 import numpy as np
 import pickle
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -56,13 +56,13 @@ def load_models():
     with open("Models/LSTM Model/tokenizer.pkl", 'rb') as f:
         lstm_tokenizer = pickle.load(f)
 
-    # DistilBERT Model
-    tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
-    model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased')
+    # T5 Model
+    tokenizer = T5Tokenizer.from_pretrained('t5-small')
+    model = T5ForConditionalGeneration.from_pretrained('t5-small')
     model.eval()
     return lstm_model, lstm_tokenizer, model, tokenizer
 
-lstm_model, lstm_tokenizer, distilbert_model, distilbert_tokenizer = load_models()
+lstm_model, lstm_tokenizer, t5_model, t5_tokenizer = load_models()
 
 # Function to clean the input
 def clean_text(text):
@@ -84,23 +84,12 @@ def analyze_news(text):
     lstm_proba = lstm_model.predict(padded, verbose=0)[0][0]
     prediction = "Fake" if lstm_proba > 0.5 else "Real"
 
-    # DistilBERT Explanation
-    inputs = distilbert_tokenizer(
-        f"Explain why this news is {prediction} in one or two sentences: {text}",
-        return_tensors="pt",
-        truncation=True,
-        max_length=128
-    )
+    # T5 Explanation
+    input_text = f"Explain why this news is {prediction} in one or two sentences: {text}"
+    inputs = t5_tokenizer(input_text, return_tensors="pt", truncation=True, max_length=128)
     with torch.no_grad():
-        outputs = distilbert_model.generate(**inputs, max_new_tokens=50)
-    try:
-        explanation = distilbert_tokenizer.decode(outputs[0], skip_special_tokens=True).split(":")[-1].strip()
-    except IndexError:
-        explanation = "Explanation could not be generated."
-    except KeyError as e:
-        explanation = f"Explanation generation error. Key error: {e}"
-    except Exception as e:
-        explanation = f"An unexpected error occurred during explanation generation: {e}"
+        outputs = t5_model.generate(**inputs, max_new_tokens=50)
+    explanation = t5_tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
 
     return {
         "prediction": prediction,
@@ -113,7 +102,7 @@ st.title("🔍 Fake News Detector")
 st.markdown("""
 This tool combines:
 - **LSTM** for classification
-- **DistilBERT** for explanation
+- **T5-Small Model** for explanation
 """)
 
 news_input = st.text_area("Paste news article or headline:", height=150)
@@ -146,7 +135,7 @@ st.markdown("""
     }
 </style>
 <div class="footer">
-    Model: LSTM + DistilBERT | Made with Streamlit
+    Model: LSTM + T5-Small | Made with Streamlit
 </div>
 """, unsafe_allow_html=True)
 
