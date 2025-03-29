@@ -91,7 +91,7 @@ def analyze_news(text):
     explanation = generate_mistral_explanation(text, prediction, lstm_proba)
     return {
         "prediction": prediction,
-        "confidence": 100*(lstm_proba if prediction == "Fake" else 1 - lstm_proba),
+        "confidence": float(lstm_proba if prediction == "Fake" else 1 - lstm_proba),
         "explanation": explanation,
     }
 
