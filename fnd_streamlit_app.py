@@ -98,8 +98,8 @@ def analyze_news(text):
         model="mistral-medium",
         messages = [{"role"= "system", "content": "You are an AI expert in fake news detection."},
                     {"role": "user", "content": prompt}]
-    
-    explanation = chat_response.choices[0].message.content
+    )
+    explanation = response.choices[0].message.content
     return explanation
 
 # Streamlit UI
