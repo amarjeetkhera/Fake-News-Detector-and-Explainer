@@ -63,7 +63,7 @@ def load_models():
     # LSTM Model
     #lstm_layer = tf.keras.layers.TFSMLayer("Models/LSTM Model/Fake_News_Detector_Model.h5", call_endpoint='serving_default')
     #lstm_model = tf.keras.Sequential([lstm_layer])
-    lstm_model = joblib.load(
+    lstm_model = joblib.load("Models/LSTM Model/Fake_News_Detector_Model.h5")
     with open("Models/LSTM Model/tokenizer.pkl", 'rb') as f:
         lstm_tokenizer = pickle.load(f)
 
