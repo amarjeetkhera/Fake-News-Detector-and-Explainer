@@ -9,8 +9,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import re
 import nltk
 from nltk.corpus import stopwords
-from mistralai.client import MistralClient
-from mistralai.models.chat.completion import ChatMessage
+import mistralai as Mistral
 
 # Downloading necessary NLTK resources
 nltk.download('stopwords')
@@ -70,14 +69,14 @@ def clean_text(text):
 
 def generate_mistral_explanation(text, prediction, lstm_proba):
     api_key = st.secrets["tNsDSmxLXwubltb5tdZkOdkOvqVLv56r"]  # Use Streamlit secrets
-    client = MistralClient(api_key=api_key)
+    client = Mistral(api_key=api_key)
     prompt = f"""The following news article was classified as {prediction} with {lstm_proba:.2f}% confidence.\n\n{text}\n\nExplain in simple terms why this news might be classified as {prediction}. Fact check the classification."""
     messages = [
         ChatMessage(role="system", content="You are an AI expert in fake news detection."),
         ChatMessage(role="user", content=prompt)
     ]
     try:
-        response = client.chat(model="mistral-medium", messages=messages)
+        response = client.chat.complete(model="mistral-medium", messages=messages)
         return response.choices[0].message.content
     except Exception as e:
         return f"Error generating explanation: {e}"
