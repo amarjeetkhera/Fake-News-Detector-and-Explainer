@@ -20,7 +20,7 @@ stop_words = set(stopwords.words("english"))
 lemmatizer = nltk.WordNetLemmatizer()
 
 # Custom CSS for styling
-st.set_page_config(page_title="Fake News Detector", layout="wide")
+st.set_page_config(page_title="Fake News Detector & Explainer", layout="wide")
 st.markdown("""
 <style>
     .reportview-container {
