@@ -30,6 +30,8 @@ st.markdown("""
         font-size:20px !important;
     }
     .result-box {
+        background-color: #4A4A4A;
+        color: white;
         border-radius: 10px;
         padding: 20px;
         margin: 10px 0px;
