@@ -49,8 +49,8 @@ st.markdown("""
 @st.cache_resource
 def load_models():
     # LSTM Model
-    lstm_model = tf.keras.models.load_model("Models/LSTM Model/Fake_News_Detector_Model.keras")
-    with open("Models/LSTM Model/tokenizer.pkl", 'rb') as f:
+    lstm_model = tf.keras.models.load_model("Models/Fake_News_Detector_Model.keras")
+    with open("Models/tokenizer.pkl", 'rb') as f:
         lstm_tokenizer = pickle.load(f)
         
     return lstm_model, lstm_tokenizer
