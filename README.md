@@ -1,4 +1,4 @@
-# 🎬 Fake News Detector and Explainer
+# 🛡️  Fake News Detector and Explainer
 
 ## 📄 Project Overview
 
