@@ -2,148 +2,106 @@
 
 ## 📄 Project Overview
 
-This project focuses on building a Fake News Detector model to classify fake and real news. Using Natural Language Processing (NLP) techniques, we analyze the textual data to predict the sentiment behind movie reviews. The concepts covered in this project form the basic building-block for understanding more complex Generative AI models, whose implementation will be covered in other projects.
+This project focuses on building a Fake News Detector model to classify fake and real news. In today's globally connected world, social media plays an important role in everyday life. It is no longer a luxury but rather a necessity without which it is hard to imagine the existence of the modern world. However, this interconnectedness also facilitates the rapid spread of misinformation, making it crucial to develop tools that can identify and mitigate the impact of fake news. This project aims to address this challenge by creating a robust fake news detection system that not only classifies news articles but also provides explanations for its predictions.
 
 ## 📂 Description
 
-The dataset used in this project is the IMDb Movie Reviews Dataset, sourced from Kaggle. This dataset is widely used for natural language processing (NLP) tasks, particularly for sentiment analysis. It contains a large collection of movie reviews from IMDb, along with their associated sentiment labels. The dataset can be downloaded from the following source:
-
-Kaggle: https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews
+The dataset used in this project combines real news articles sourced from reputable APIs and datasets with synthetically generated fake news. The fake news was created using a combination of the `faker` library, which produces realistic-sounding but fictional data, and the powerful Mistral API, which generates coherent and contextually relevant text. This approach ensures a diverse and challenging dataset that mirrors the complexities of real-world fake news.
 
 ### Dataset Summary
 
-Total Reviews: 50,000
-
-Labels: Binary (positive or negative sentiment)
-
-Data Split: 25,000 reviews for training and 25,000 reviews for testing
-
-Review Format: Text data containing user-submitted reviews
-
-Sentiment Labels:
-
-1 (positive sentiment)
-
-0 (negative sentiment)
+-   Total Articles: [Specify the total number of articles in your dataset]
+-   Labels: Binary (real or fake news)
+-   Data Split: [Specify the training, validation, and testing split ratios]
+-   Article Format: Text data containing news content.
+-   Sentiment Labels:
+    -   1 (fake news)
+    -   0 (real news)
 
 ### Column Information
 
-review: The text content of the movie review.
+-   `text`: The text content of the news article.
+-   `label`: The authenticity label, where 1 indicates fake news and 0 indicates real news.
 
-sentiment: The sentiment label, where 1 indicates a positive review and 0 indicates a negative review.
+### Data Augmentation
 
-Source
-This dataset was originally provided by Stanford University for use in sentiment classification tasks and was made available on Kaggle for broader usage in NLP research and practice.
+To enhance the model's performance and address class imbalance, we implemented data augmentation techniques:
 
-Why This Dataset?
-This dataset is ideal for sentiment analysis projects because:
-
-It provides a balanced set of positive and negative reviews, making it perfect for training machine learning models.
-The reviews are varied in length and vocabulary, providing a realistic challenge for text processing and model training.
+-   Synthetic fake news generation using `faker` and the Mistral API.
+-   [Mention any other augmentation techniques used, e.g., back-translation, synonym replacement]
 
 ## 🚀 Objectives
 
--Extract insights from IMDb movie reviews and determine if the sentiment is positive or negative.
-
--Implement various text preprocessing techniques to clean and prepare the data.
-
--Build and evaluate models using different feature extraction methods like Bag-of-Words and TF-IDF.
-
--Visualize the data distribution, word frequencies, and model performance using matplotlib and seaborn.
+-   Develop a high-accuracy model to distinguish between real and fake news articles.
+-   Integrate the Mistral API to generate human-readable explanations for the model's predictions, enhancing transparency and user trust.
+-   Implement an active learning mechanism that leverages the LLM's explanations to refine the model's accuracy.
+-   Deploy the model as a user-friendly web application, making it accessible to a wide audience.
 
 ## 📊 Key Features
 
--Data Cleaning & Preprocessing: Removal of noise, punctuation, stopwords, and tokenization.
-
--Feature Engineering: Implementation of Bag-of-Words and TF-IDF to transform text into numerical features.
-
--Model Training: Trained a Logistic Regression classifier to predict the sentiment of IMDb reviews.
-
--Data Visualization: Visualized class distribution, review length, word clouds, n-grams, and model performance (confusion matrix, precision-recall, and ROC curves).
+-   **Advanced Text Preprocessing:** Techniques like tokenization, stop-word removal, and vectorization (TF-IDF, word embeddings) to prepare the text data for model training.
+-   **LSTM-Based Model:** Utilizes Long Short-Term Memory networks to capture the sequential nature of text and improve classification accuracy.
+-   **LLM Integration:** Leverages the Mistral API to generate insightful explanations for the model's predictions.
+-   **Active Learning Loop:** Implements a feedback loop that uses discrepancies between model predictions and LLM explanations to retrain and improve the model.
+-   **Streamlit Deployment:** Deploys the model as a web application for easy access and use.
 
 ## 🛠️ Tools & Technologies
 
-Python: Core programming language.
+-   Python: Core programming language.
+-   TensorFlow/Keras: Building and training the LSTM model.
+-   scikit-learn: Data preprocessing and model evaluation.
+-   pandas, numpy: Data manipulation and analysis.
+-   requests: For interacting with the Mistral API.
+-   Streamlit: Web application deployment.
+-   Mistral API: LLM for explanation generation.
+-   `faker`: Synthetic data generation.
 
-Jupyter Notebook: Development environment.
+## 📉 Model Building & Evaluation
 
-### Libraries:
-pandas, numpy: Data manipulation and analysis.
-
-scikit-learn: Model building, feature extraction, and evaluation.
-
-matplotlib, seaborn: Data visualization.
-
-nltk: Natural Language Processing toolkit.
-
-wordcloud: Visualization of frequent words.
-
-## 📉 Exploratory Data Analysis (EDA)
-
-The following steps as part of the EDA were performed to understand the dataset:
-
--Class Distribution: Visualized the balance between positive and negative reviews.
-
--Word Clouds: Created separate word clouds for positive and negative reviews to highlight common words.
-
--TF-IDF Analysis: Visualized the most significant words based on their TF-IDF scores.
-
-## 🧑‍💻 Model Building & Evaluation
-
-Preprocessed the data using Bag-of-Words and TF-IDF vectorizers.
-
-Trained a Logistic Regression model to classify reviews as positive or negative.
-
-Evaluated model performance using:
-
--Confusion Matrix
-
--Precision-Recall Curve
-
--ROC Curve
+-   Preprocessed the text data using [Specify vectorization method, e.g., TF-IDF, word embeddings].
+-   Trained an LSTM model to classify news articles.
+-   Integrated the Mistral API for explanation generation.
+-   Implemented active learning to refine the model based on explanation discrepancies.
+-   Evaluated the model using:
+    -   Accuracy
+    -   Precision
+    -   Recall
+    -   F1-Score
+    -   [Any other relevant metrics]
 
 ## 📈 Results
 
-The Logistic Regression model achieved:
-
-Accuracy: 88%
-
-Precision: 87%
-
-Recall: 89%
-
-F1-Score: 88%
+-   LSTM Model Accuracy: [Specify the model's accuracy]
+-   Precision: [Specify the model's precision]
+-   Recall: [Specify the model's recall]
+-   F1-Score: [Specify the model's F1-Score]
+-   Explanation Quality: [Describe the quality and effectiveness of the LLM-generated explanations]
 
 ## 🚀 Deployment
 
-The trained Logistic Regression model was deployed as a web application using Streamlit. This allows users to input their own IMDb movie reviews and receive real-time sentiment predictions.
+The trained LSTM model and explainer were deployed as a web application using Streamlit. This allows users to input news articles and receive real-time fake news predictions along with fact-checking explanations.
 
-**Streamlit App Link:** https://sentiment-analysis-on-imdb-reviews-7zkvymoemaji92rpqqokxk.streamlit.app
+**Streamlit App Link:** [Insert your Streamlit app link]
 
 **Key Features of the Streamlit App:**
 
--   Simple and user-friendly interface for inputting movie reviews.
--   Real-time sentiment prediction (positive or negative).
--   Clear display of the predicted sentiment.
+-   User-friendly interface for inputting news articles.
+-   Real-time fake news prediction.
+-   Detailed fact-checking explanations generated by the Mistral API.
+-   Clear display of the prediction and explanation.
 
 **How to Use:**
 
 1.  Visit the Streamlit app link.
-2.  Enter your IMDb movie review in the provided text area.
-3.  Click the "Analyze Sentiment" button.
-4.  View the predicted sentiment displayed on the screen.
+2.  Enter the news article text in the provided text area.
+3.  Click the "Detect and Explain" button.
+4.  View the predicted label and the fact-checking explanation.
 
-## 🛍️ Real-World Application: Product Review Analysis
+## 🛍️ Real-World Application: Combating Misinformation
 
-Beyond movie reviews, this sentiment analysis model can be effectively applied to understand customer feedback on e-commerce platforms like Amazon and Alibaba.
+This fake news detector and explainer is designed to be a valuable tool in combating the spread of misinformation across various platforms:
 
-**Use Case: Product Performance Analysis**
-
-By analyzing product reviews, businesses can:
-
--   **Identify key product strengths and weaknesses:** Determine what customers like or dislike about a product.
--   **Monitor customer satisfaction:** Track changes in sentiment over time to gauge customer happiness.
--   **Gain insights into product quality:** Understand common issues and areas for improvement.
--   **Inform marketing and product development:** Tailor strategies based on customer feedback.
-
-  This deployment showcases the versatile practical application of the sentiment analysis model, making it accessible for real-world use.
+-   **Social Media Monitoring:** Automating the detection of fake news on social media to prevent its viral spread.
+-   **News Aggregators:** Providing users with more reliable and fact-checked news content.
+-   **Educational Tools:** Empowering users with the ability to identify fake news and improve their media literacy.
+-   **Content Moderation:** Assisting in the moderation of online content to maintain a safe and trustworthy digital environment.
