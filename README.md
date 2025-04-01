@@ -67,5 +67,5 @@ The trained LSTM model and explainer were deployed as a web application using St
 
 1.  Visit the Streamlit app link.
 2.  Enter the news article text in the provided text area.
-3.  Click the "Detect and Explain" button.
+3.  Click the "Analyze" button.
 4.  View the predicted label and the fact-checking explanation.
