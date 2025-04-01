@@ -2,11 +2,13 @@
 
 ## Project Overview
 
-This project focuses on building a Fake News Detector model to classify fake and real news. In today's globally connected world, social media plays an important role in everyday life. It is no longer a luxury but rather a necessity without which it is hard to imagine the existence of the modern world. However, this interconnectedness also facilitates the rapid spread of misinformation, making it crucial to develop tools that can identify and mitigate the impact of fake news. This project aims to address this challenge by creating a robust fake news detection system that not only classifies news articles and headlines but also provides explanations for its predictions and fake-checks them.
+This project focuses on building a Fake News Detector model to classify fake and real news. In today's globally connected world, social media plays an important role in everyday life. It is no longer a luxury but rather a necessity without which it is hard to imagine the existence of the modern world. However, this interconnectedness also facilitates the rapid spread of misinformation, making it crucial to develop tools that can identify and mitigate the impact of fake news. This project aims to address this challenge by creating a robust fake news detection system that not only classifies news articles and headlines but also provides explanations for its predictions and fact-checks them.
 
 ## Description
 
-The dataset used in this project combines news data from different sources such as Twitter fake news data, samples from Gossipcop and Politifact datasets and as well as data with synthetically generated fake news. The combined data was cleaned and preprocessed and then an LSTM model was trained on the dataset. The predictions made by the LSTM model are further fed into the next layer of Mistral API which checks the prection and explains the prediction made as well as fact-checks the prediction.
+To build a robust fake news detection system, this project employs a multi-source dataset, combining Twitter fake news, samples from Gossipcop and Politifact, and synthetically generated content. After thorough cleaning and preprocessing, an LSTM model was trained to classify news articles as real or fake. The model's predictions are then passed to the Mistral API, which generates comprehensive explanations and performs fact-checking, providing a layer of validation and insight into the model's reasoning.
+
+Upcoming planned enhancements include implementing a feedback loop that utilizes the Mistral API's fact-checking results for model retraining, optimizing its classification accuracy.
 
 ### Dataset Summary
 
@@ -16,17 +18,9 @@ The dataset used in this project combines news data from different sources such 
 To enhance the model's performance and address class imbalance some data was synthetically augmented using the `faker` library. The augmented data consisted synthetically generated fake news from various domains such as geopolitics, technology, science, history, culture, past, future, health, entertainment, sports, finance, environment, space exploration, artificial intelligence, social media, climate change and education.
 The fake news created using the `faker` library, produced realistic-sounding but fictional data, which generated coherent and contextually relevant text. This approach ensured a diverse and challenging dataset that mirrors the complexities of real-world fake news.
 
-## Key Features
-
--   **LSTM-Based Model:** Utilizes Long Short-Term Memory networks to capture the sequential nature of text and improve classification accuracy.
--   **LLM Integration:** Leverages the Mistral API to generate insightful explanations for the model's predictions.
--   **Active Learning Loop:** Implements a feedback loop that uses discrepancies between model predictions and LLM explanations to retrain and improve the model.
--   **Streamlit Deployment:** Deploys the model as a web application for easy access and use.
-
 ## Results
 
 -   LSTM Model Accuracy: 94 %
--   Explanation Quality: [Describe the quality and effectiveness of the LLM-generated explanations]
 
 ## Deployment
 
