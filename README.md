@@ -1,10 +1,10 @@
-# 🛡️  Fake News Detector and Explainer
+# Fake News Detector and Explainer
 
-## 📄 Project Overview
+## Project Overview
 
 This project focuses on building a Fake News Detector model to classify fake and real news. In today's globally connected world, social media plays an important role in everyday life. It is no longer a luxury but rather a necessity without which it is hard to imagine the existence of the modern world. However, this interconnectedness also facilitates the rapid spread of misinformation, making it crucial to develop tools that can identify and mitigate the impact of fake news. This project aims to address this challenge by creating a robust fake news detection system that not only classifies news articles and headlines but also provides explanations for its predictions and fake-checks them.
 
-## 📂 Description
+## Description
 
 The dataset used in this project combines real news articles sourced from reputable APIs and datasets with synthetically generated fake news. The fake news was created using a combination of the `faker` library, which produces realistic-sounding but fictional data, and the powerful Mistral API, which generates coherent and contextually relevant text. This approach ensures a diverse and challenging dataset that mirrors the complexities of real-world fake news.
 
@@ -24,14 +24,14 @@ To enhance the model's performance and address class imbalance, we implemented d
 -   Synthetic fake news generation using `faker` and the Mistral API.
 -   [Mention any other augmentation techniques used, e.g., back-translation, synonym replacement]
 
-## 📊 Key Features
+## Key Features
 
 -   **LSTM-Based Model:** Utilizes Long Short-Term Memory networks to capture the sequential nature of text and improve classification accuracy.
 -   **LLM Integration:** Leverages the Mistral API to generate insightful explanations for the model's predictions.
 -   **Active Learning Loop:** Implements a feedback loop that uses discrepancies between model predictions and LLM explanations to retrain and improve the model.
 -   **Streamlit Deployment:** Deploys the model as a web application for easy access and use.
 
-## 🛠️ Tools & Technologies
+## Tools & Technologies
 
 -   Python: Core programming language.
 -   TensorFlow/Keras: Building and training the LSTM model.
@@ -42,20 +42,7 @@ To enhance the model's performance and address class imbalance, we implemented d
 -   Mistral API: LLM for explanation generation.
 -   `faker`: Synthetic data generation.
 
-## 📉 Model Building & Evaluation
-
--   Preprocessed the text data using [Specify vectorization method, e.g., TF-IDF, word embeddings].
--   Trained an LSTM model to classify news articles.
--   Integrated the Mistral API for explanation generation.
--   Implemented active learning to refine the model based on explanation discrepancies.
--   Evaluated the model using:
-    -   Accuracy
-    -   Precision
-    -   Recall
-    -   F1-Score
-    -   [Any other relevant metrics]
-
-## 📈 Results
+## Results
 
 -   LSTM Model Accuracy: [Specify the model's accuracy]
 -   Precision: [Specify the model's precision]
@@ -63,11 +50,11 @@ To enhance the model's performance and address class imbalance, we implemented d
 -   F1-Score: [Specify the model's F1-Score]
 -   Explanation Quality: [Describe the quality and effectiveness of the LLM-generated explanations]
 
-## 🚀 Deployment
+## Deployment
 
 The trained LSTM model and explainer were deployed as a web application using Streamlit. This allows users to input news articles and receive real-time fake news predictions along with fact-checking explanations.
 
-**Streamlit App Link:** [Insert your Streamlit app link]
+**Streamlit App Link:** https://fake-news-detector-and-explainer-8bgvqtt9mnhq5b6yf5fubt.streamlit.app
 
 **Key Features of the Streamlit App:**
 
@@ -82,12 +69,3 @@ The trained LSTM model and explainer were deployed as a web application using St
 2.  Enter the news article text in the provided text area.
 3.  Click the "Detect and Explain" button.
 4.  View the predicted label and the fact-checking explanation.
-
-## 🛍️ Real-World Application: Combating Misinformation
-
-This fake news detector and explainer is designed to be a valuable tool in combating the spread of misinformation across various platforms:
-
--   **Social Media Monitoring:** Automating the detection of fake news on social media to prevent its viral spread.
--   **News Aggregators:** Providing users with more reliable and fact-checked news content.
--   **Educational Tools:** Empowering users with the ability to identify fake news and improve their media literacy.
--   **Content Moderation:** Assisting in the moderation of online content to maintain a safe and trustworthy digital environment.
