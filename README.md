@@ -2,7 +2,7 @@
 
 ## 📄 Project Overview
 
-This project focuses on building a Fake News Detector model to classify fake and real news. In today's globally connected world, social media plays an important role in everyday life. It is no longer a luxury but rather a necessity without which it is hard to imagine the existence of the modern world. However, this interconnectedness also facilitates the rapid spread of misinformation, making it crucial to develop tools that can identify and mitigate the impact of fake news. This project aims to address this challenge by creating a robust fake news detection system that not only classifies news articles but also provides explanations for its predictions.
+This project focuses on building a Fake News Detector model to classify fake and real news. In today's globally connected world, social media plays an important role in everyday life. It is no longer a luxury but rather a necessity without which it is hard to imagine the existence of the modern world. However, this interconnectedness also facilitates the rapid spread of misinformation, making it crucial to develop tools that can identify and mitigate the impact of fake news. This project aims to address this challenge by creating a robust fake news detection system that not only classifies news articles and headlines but also provides explanations for its predictions and fake-checks them.
 
 ## 📂 Description
 
@@ -10,18 +10,12 @@ The dataset used in this project combines real news articles sourced from reputa
 
 ### Dataset Summary
 
--   Total Articles: [Specify the total number of articles in your dataset]
+-   Total Samples: [Specify the total number of articles in your dataset]
 -   Labels: Binary (real or fake news)
--   Data Split: [Specify the training, validation, and testing split ratios]
 -   Article Format: Text data containing news content.
 -   Sentiment Labels:
     -   1 (fake news)
     -   0 (real news)
-
-### Column Information
-
--   `text`: The text content of the news article.
--   `label`: The authenticity label, where 1 indicates fake news and 0 indicates real news.
 
 ### Data Augmentation
 
@@ -30,16 +24,8 @@ To enhance the model's performance and address class imbalance, we implemented d
 -   Synthetic fake news generation using `faker` and the Mistral API.
 -   [Mention any other augmentation techniques used, e.g., back-translation, synonym replacement]
 
-## 🚀 Objectives
-
--   Develop a high-accuracy model to distinguish between real and fake news articles.
--   Integrate the Mistral API to generate human-readable explanations for the model's predictions, enhancing transparency and user trust.
--   Implement an active learning mechanism that leverages the LLM's explanations to refine the model's accuracy.
--   Deploy the model as a user-friendly web application, making it accessible to a wide audience.
-
 ## 📊 Key Features
 
--   **Advanced Text Preprocessing:** Techniques like tokenization, stop-word removal, and vectorization (TF-IDF, word embeddings) to prepare the text data for model training.
 -   **LSTM-Based Model:** Utilizes Long Short-Term Memory networks to capture the sequential nature of text and improve classification accuracy.
 -   **LLM Integration:** Leverages the Mistral API to generate insightful explanations for the model's predictions.
 -   **Active Learning Loop:** Implements a feedback loop that uses discrepancies between model predictions and LLM explanations to retrain and improve the model.
