@@ -10,19 +10,10 @@ The dataset used in this project combines real news articles sourced from reputa
 
 ### Dataset Summary
 
--   Total Samples: [Specify the total number of articles in your dataset]
--   Labels: Binary (real or fake news)
--   Article Format: Text data containing news content.
--   Sentiment Labels:
-    -   1 (fake news)
-    -   0 (real news)
+-   Total Samples: 77716
+-   Labels: Binary (fake news: 1, real news: 0)
 
-### Data Augmentation
-
-To enhance the model's performance and address class imbalance, we implemented data augmentation techniques:
-
--   Synthetic fake news generation using `faker` and the Mistral API.
--   [Mention any other augmentation techniques used, e.g., back-translation, synonym replacement]
+To enhance the model's performance and address class imbalance some data was synthetically augmented using the `faker` library. The augmented data consisted synthetically generated fake news from various domains such as geopolitics, technology, science, history, culture, past, future, health, entertainment, sports, finance, environment, space exploration, artificial intelligence, social media, climate change and education.
 
 ## Key Features
 
@@ -30,17 +21,6 @@ To enhance the model's performance and address class imbalance, we implemented d
 -   **LLM Integration:** Leverages the Mistral API to generate insightful explanations for the model's predictions.
 -   **Active Learning Loop:** Implements a feedback loop that uses discrepancies between model predictions and LLM explanations to retrain and improve the model.
 -   **Streamlit Deployment:** Deploys the model as a web application for easy access and use.
-
-## Tools & Technologies
-
--   Python: Core programming language.
--   TensorFlow/Keras: Building and training the LSTM model.
--   scikit-learn: Data preprocessing and model evaluation.
--   pandas, numpy: Data manipulation and analysis.
--   requests: For interacting with the Mistral API.
--   Streamlit: Web application deployment.
--   Mistral API: LLM for explanation generation.
--   `faker`: Synthetic data generation.
 
 ## Results
 
