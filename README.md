@@ -6,7 +6,7 @@ This project focuses on building a Fake News Detector model to classify fake and
 
 ## Description
 
-The dataset used in this project combines real news articles sourced from reputable APIs and datasets with synthetically generated fake news. The fake news was created using a combination of the `faker` library, which produces realistic-sounding but fictional data, and the powerful Mistral API, which generates coherent and contextually relevant text. This approach ensures a diverse and challenging dataset that mirrors the complexities of real-world fake news.
+The dataset used in this project combines news data from different sources such as Twitter fake news data, samples from Gossipcop and Politifact datasets and as well as data with synthetically generated fake news. The combined data was cleaned and preprocessed and then an LSTM model was trained on the dataset. The predictions made by the LSTM model are further fed into the next layer of Mistral API which checks the prection and explains the prediction made as well as fact-checks the prediction.
 
 ### Dataset Summary
 
@@ -14,6 +14,7 @@ The dataset used in this project combines real news articles sourced from reputa
 -   Labels: Binary (fake news: 1, real news: 0)
 
 To enhance the model's performance and address class imbalance some data was synthetically augmented using the `faker` library. The augmented data consisted synthetically generated fake news from various domains such as geopolitics, technology, science, history, culture, past, future, health, entertainment, sports, finance, environment, space exploration, artificial intelligence, social media, climate change and education.
+The fake news created using the `faker` library, produced realistic-sounding but fictional data, which generated coherent and contextually relevant text. This approach ensured a diverse and challenging dataset that mirrors the complexities of real-world fake news.
 
 ## Key Features
 
@@ -24,10 +25,7 @@ To enhance the model's performance and address class imbalance some data was syn
 
 ## Results
 
--   LSTM Model Accuracy: [Specify the model's accuracy]
--   Precision: [Specify the model's precision]
--   Recall: [Specify the model's recall]
--   F1-Score: [Specify the model's F1-Score]
+-   LSTM Model Accuracy: 94 %
 -   Explanation Quality: [Describe the quality and effectiveness of the LLM-generated explanations]
 
 ## Deployment
