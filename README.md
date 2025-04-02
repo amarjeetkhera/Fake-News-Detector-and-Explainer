@@ -6,7 +6,7 @@ This project focuses on building a Fake News Detector model to classify fake and
 
 ## Description
 
-To build a robust fake news detection system, this project employs a multi-source dataset, combining Twitter news dataset, samples from Gossipcop and Politifact datasets and synthetically generated data. After thorough cleaning and preprocessing, an LSTM model was trained to classify news articles as real or fake. The model's predictions are then passed to the Mistral API, which generates comprehensive explanations and performs fact-checking, providing a layer of validation and insight into the model's reasoning.
+To build a robust fake news detection system, this project employs a multi-source dataset, combining Twitter news dataset, samples from Gossipcop and Politifact datasets and synthetically generated data. After thorough cleaning and preprocessing, an LSTM model was trained to classify news articles as real or fake. The model's predictions are then passed to the  `faker`, which generates comprehensive explanations and performs fact-checking, providing a layer of validation and insight into the model's reasoning.
 
 Upcoming planned enhancements include implementing a feedback loop that utilizes the Mistral API's fact-checking results for model retraining, optimizing its classification accuracy.
 
