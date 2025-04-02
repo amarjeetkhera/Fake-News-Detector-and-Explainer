@@ -20,7 +20,11 @@ The fake news created using the `faker` library, produced realistic-sounding but
 
 ## Results
 
--   LSTM Model Accuracy: 94 %
+LSTM Model
+-   Accuracy: 94.54 %
+-   Precision: 96.39 %
+-   Recall: 92.54 %
+-   F1 Score: 94.43 %
 
 ## Deployment
 
