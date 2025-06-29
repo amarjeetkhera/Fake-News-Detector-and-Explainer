@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-"""FND_streamlit app.ipynb"""
 # Loading libraries
 import streamlit as st
 import tensorflow as tf
