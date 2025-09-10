@@ -75,7 +75,7 @@ def generate_mistral_explanation(text, prediction, lstm_proba):
         {"role":"user", "content":prompt}
     ]
     try:
-        response = client.chat.complete(model="mistral-medium", messages=messages)
+        response = client.chat.complete(model="mistral-large-latest", messages=messages)
         return response.choices[0].message.content
     except Exception as e:
         return f"Error generating explanation: {e}"
